@@ -4,7 +4,7 @@ Submission for 2020 GMTK Game Jam: 2D platformer where you can only influence pl
 
 # Installation
 
-See the releases for an executable download. Also available at __TODO__
+See the releases for an executable download. Also available at [itch.io](https://fire-bellied-toad.itch.io/autonomous)
 
 # Future
 
