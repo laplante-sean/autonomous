@@ -23,7 +23,9 @@ tracks/0/keys = {
 [sub_resource type="CircleShape2D" id=2]
 radius = 6.0
 
-[node name="Coin" instance=ExtResource( 2 )]
+[node name="Coin" groups=[
+"UserPlacedObject",
+] instance=ExtResource( 2 )]
 collision_layer = 12
 
 [node name="Sprite" type="Sprite" parent="." index="0"]

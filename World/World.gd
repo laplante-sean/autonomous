@@ -89,6 +89,12 @@ func reload_level():
 	if player:
 		player.queue_free()
 		player = null
+
+	# Cleanup any stray coins or other user placed objects
+	var main = get_tree().current_scene
+	for child in main.get_children():
+		if child.is_in_group("UserPlacedObject"):
+			child.queue_free()
 	
 	currentLevel.queue_free()
 	currentLevel = Utils.instance_scene_on_main(load(currentLevelPath))
