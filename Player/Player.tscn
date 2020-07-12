@@ -1,0 +1,190 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Player/Player.gd" type="Script" id=1]
+[ext_resource path="res://World/monochrome_tilemap_transparent_packed.png" type="Texture" id=2]
+[ext_resource path="res://CollisionBoxes/ObjectDetectionZone.tscn" type="PackedScene" id=3]
+[ext_resource path="res://CollisionBoxes/CollectibleDetector.tscn" type="PackedScene" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 6, 6 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "AirTime"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 284 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 262 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "FallIdle"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 265 ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 240 ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 284 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "JumpIdle"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 285 ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 241, 242, 243 ]
+}
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 48, 23 )
+
+[sub_resource type="CircleShape2D" id=10]
+radius = 8.06226
+
+[node name="Player" type="KinematicBody2D"]
+collision_layer = 2
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -3 )
+texture = ExtResource( 2 )
+vframes = 20
+hframes = 20
+frame = 240
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -1 )
+shape = SubResource( 1 )
+
+[node name="CoyoteJumpTimer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.2
+one_shot = true
+
+[node name="DirectionSwitchTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="JumpTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Idle"
+anims/AirTime = SubResource( 2 )
+anims/Fall = SubResource( 3 )
+anims/FallIdle = SubResource( 4 )
+anims/Idle = SubResource( 5 )
+anims/Jump = SubResource( 6 )
+anims/JumpIdle = SubResource( 7 )
+anims/Run = SubResource( 8 )
+
+[node name="CameraFollow" type="RemoteTransform2D" parent="."]
+
+[node name="ObjectDetectionZone" parent="." instance=ExtResource( 3 )]
+
+[node name="Collider" parent="ObjectDetectionZone" index="0"]
+modulate = Color( 1, 1, 1, 0.317647 )
+position = Vector2( 0, -18 )
+shape = SubResource( 11 )
+
+[node name="CollectibleDetector" parent="." instance=ExtResource( 4 )]
+
+[node name="CollisionShape2D" parent="CollectibleDetector" index="0"]
+position = Vector2( 0, -1 )
+shape = SubResource( 10 )
+[connection signal="body_exited" from="ObjectDetectionZone" to="." method="_on_ObjectDetectionZone_body_exited"]
+[connection signal="object_detected" from="ObjectDetectionZone" to="." method="_on_ObjectDetectionZone_object_detected"]
+[connection signal="body_exited" from="CollectibleDetector" to="." method="_on_CollectibleDetector_body_exited"]
+[connection signal="collect" from="CollectibleDetector" to="." method="_on_CollectibleDetector_collect"]
+
+[editable path="ObjectDetectionZone"]
+
+[editable path="CollectibleDetector"]
