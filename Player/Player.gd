@@ -17,6 +17,7 @@ enum PlayerState {
 	WANDER
 }
 
+var stats = Utils.get_PlayerStats()
 var state = PlayerState.WANDER
 var snap_vector = Vector2.ZERO
 var just_jumped = false
@@ -77,6 +78,7 @@ func die():
 	Called if we die
 	"""
 	emit_signal("died")
+	stats.death_count += 1
 
 
 func get_input_vector():
@@ -115,7 +117,6 @@ func get_input_vector_towards_object():
 	
 	var target = interesting_objects[0]
 	var direction = global_position.direction_to(target.global_position).normalized()
-	print(direction.y)
 	var should_jump = round(direction.y) != 0 and sign(direction.y) == -1
 	input_vector.x = round(direction.x)
 
@@ -321,7 +322,6 @@ func sort_interesting(obj_a, obj_b):
 
 
 func _on_ObjectDetectionZone_object_detected(body):
-	print("Found something interesting: ", body)
 	state = PlayerState.MOVE
 	interesting_objects.append(body)
 
@@ -331,7 +331,6 @@ func _on_ObjectDetectionZone_object_detected(body):
 
 
 func _on_ObjectDetectionZone_body_exited(body):
-	print("Lost track of something interesting: ", body)
 	var idx = interesting_objects.find(body)
 	if idx != -1:
 		interesting_objects.remove(idx)

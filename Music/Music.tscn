@@ -4,6 +4,7 @@
 [ext_resource path="res://Music/8bit-nofunhere-no-reverb.wav" type="AudioStream" id=2]
 
 [node name="Music" type="AudioStreamPlayer2D"]
+pause_mode = 2
 stream = ExtResource( 2 )
 autoplay = true
 script = ExtResource( 1 )

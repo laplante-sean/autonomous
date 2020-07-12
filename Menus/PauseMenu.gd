@@ -12,6 +12,9 @@ func _ready():
 
 
 func _process(delta):
+	if not visible and get_tree().paused:
+		return  # Something else is handling pause
+	
 	if Input.is_action_just_pressed("pause"):
 		self.paused = !paused
 		if not self.paused:

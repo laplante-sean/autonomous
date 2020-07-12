@@ -22,6 +22,7 @@ func camera_shake(amount, duration):
 
 
 func _on_Events_add_camera_shake(amount, duration):
+	print("SHAKE SHAKE SHAKE")
 	camera_shake(amount, duration)
 
 

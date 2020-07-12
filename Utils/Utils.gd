@@ -27,3 +27,14 @@ func get_MainInstances():
 	:returns: The MainInstances resource.
 	"""
 	return ResourceLoader.load("res://MainInstances/MainInstances.tres")
+
+
+func get_PlayerStats():
+	"""
+	Helper method to loud our PlayerStats resource which
+	allows for shared access to things like score, deaths,
+	etc.
+	
+	:returns: The PlayerStats resource.
+	"""
+	return ResourceLoader.load("res://Player/PlayerStats.tres")

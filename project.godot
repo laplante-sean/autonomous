@@ -33,13 +33,19 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://Player/Player.gd"
+}, {
+"base": "Resource",
+"class": "PlayerStats",
+"language": "GDScript",
+"path": "res://Player/PlayerStats.gd"
 } ]
 _global_script_class_icons={
 "CollectibleDetector": "",
 "CollectibleItem": "",
 "MainInstances": "",
 "ObjectDetectionZone": "",
-"Player": ""
+"Player": "",
+"PlayerStats": ""
 }
 
 [application]

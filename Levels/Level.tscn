@@ -11,13 +11,13 @@ script = ExtResource( 3 )
 
 [node name="SpawnPoint" type="Position2D" parent="."]
 
-[node name="PlayableArea" type="Area2D" parent="."]
+[node name="DeathArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
-[node name="PlayerDetector" type="CollisionShape2D" parent="PlayableArea"]
+[node name="PlayerDetector" type="CollisionPolygon2D" parent="DeathArea"]
 
 [node name="LevelPortal" parent="." instance=ExtResource( 2 )]
-[connection signal="body_exited" from="PlayableArea" to="." method="_on_PlayableArea_body_exited"]
+[connection signal="body_entered" from="DeathArea" to="." method="_on_DeathArea_body_entered"]
 
 [editable path="LevelPortal"]

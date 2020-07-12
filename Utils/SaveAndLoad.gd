@@ -3,7 +3,11 @@ extends Node
 const SAVE_DATA_PATH = "res://autonomous_save_data.json"
 
 var default_save_data = {
-	level = "res://Levels/Level_00.tscn"
+	current_level = "res://Levels/Level_00.tscn",
+	total_death_count = 0,
+	total_coins_used = 0,
+	playthroughs = 0,
+	levels = {}
 }
 
 
