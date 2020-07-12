@@ -22,7 +22,6 @@ var snap_vector = Vector2.ZERO
 var just_jumped = false
 var double_jump = true
 var motion = Vector2.ZERO
-var spawn_point = Vector2.ZERO
 var input_vector = Vector2.ZERO
 var current_animation = "Idle"
 var interesting_objects = []
@@ -33,10 +32,10 @@ onready var jumpTimer = $JumpTimer
 onready var collider = $Collider
 onready var animationPlayer = $AnimationPlayer
 onready var sprite = $Sprite
+onready var cameraFollow = $CameraFollow
 
 
 func _ready():
-	spawn_point = global_position
 	if HUMAN_CONTROL:
 		state = PlayerState.HUMAN_CONTROL
 	else:
@@ -64,6 +63,7 @@ func _physics_process(delta):
 			update_animations()
 			move()
 		PlayerState.WANDER:
+			# This is the computer's state when it's moving randomly
 			get_random_input_vector()
 			apply_horizontal_force(delta)
 			random_jump_check()
@@ -72,35 +72,11 @@ func _physics_process(delta):
 			move()
 
 
-func scan_for_something_interesting():
+func die():
 	"""
-	Scans surroundings for something interesting and updates the state
-	to PlayerState.MOVE if we find something
+	Called if we die
 	"""
-	# TODO
-	pass
-
-
-func spawn(loc):
-	"""
-	Called to spawn the player. Sets the spawn point
-	and moves the player to it. If this method is not
-	called, the spawn point will be set to the player's
-	position in the _ready() callback.
-	
-	:param loc: The location to spawn the player
-	"""
-	spawn_point = loc
-	respawn()
-
-
-func respawn():
-	"""
-	Respawn the player.
-	"""
-	global_position = spawn_point
-	motion = Vector2.ZERO
-	state = PlayerState.MOVE
+	emit_signal("died")
 
 
 func get_input_vector():
@@ -119,7 +95,7 @@ func get_random_input_vector():
 	var options = [-1, 0, 1]
 	options.shuffle()
 
-	if directionSwitchTimer.time_left == 0:
+	if directionSwitchTimer.time_left == 0 or is_on_wall():
 		directionSwitchTimer.start()
 		input_vector.x = options[0]
 
@@ -137,7 +113,7 @@ func get_input_vector_towards_object():
 		state = PlayerState.WANDER
 		return
 	
-	var target = interesting_objects[0]	
+	var target = interesting_objects[0]
 	var direction = global_position.direction_to(target.global_position).normalized()
 	print(direction.y)
 	var should_jump = round(direction.y) != 0 and sign(direction.y) == -1
@@ -318,6 +294,15 @@ func move():
 	if is_on_floor() and get_floor_velocity().length() == 0 and abs(motion.x) < 1:
 		# If we're on the floor, not on a moving platform, and our motion is super tiny...don't move
 		position.x = last_position.x
+
+	if state == PlayerState.MOVE and (is_on_ceiling() or is_on_wall()) and len(interesting_objects) > 0:
+		# This means we're trying to get to an object but it
+		# is probably on the other side of something. We're only
+		# ever moving towards the closest object and that should be
+		# the first one in our list. So remove it for now. Maybe 
+		# we'll be in a better position to grab it next time it comes 
+		# into view.
+		interesting_objects.remove(0)
 
 
 func sort_interesting(obj_a, obj_b):

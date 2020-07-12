@@ -1,23 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://World/World.gd" type="Script" id=1]
-[ext_resource path="res://World/TileMap.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://UI/UI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://World/Camera.tscn" type="PackedScene" id=4]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
 
+[node name="UI" parent="." instance=ExtResource( 2 )]
+
 [node name="Camera" parent="." instance=ExtResource( 4 )]
 position = Vector2( 74.0836, 133.484 )
-
-[node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 74.0836, 133.484 )
-
-[node name="CameraFollow" parent="Player" index="6"]
-remote_path = NodePath("../../Camera")
-
-[node name="TileMap" parent="." instance=ExtResource( 2 )]
-tile_data = PoolIntArray( 65543, 4, 0, 65544, 4, 0, 65545, 4, 0, 65551, 1, 196611, 65553, 0, 0, 65554, 0, 1, 65555, 0, 2, 131079, 4, 65536, 131080, 4, 65536, 131081, 4, 65536, 131089, 0, 65536, 131090, 0, 65537, 131091, 0, 65538, 196615, 4, 65536, 196616, 4, 65536, 196617, 4, 65536, 196620, 1, 196608, 196621, 1, 196610, 196625, 0, 131072, 196626, 0, 131073, 196627, 0, 131074, 262151, 4, 131072, 262152, 4, 131072, 262153, 4, 131072, 327694, 1, 196608, 327695, 1, 196610, 458763, 2, 196608, 458764, 2, 196609, 458765, 2, 196609, 458766, 2, 196609, 458767, 2, 196609, 458768, 2, 196610, 589824, 2, 196608, 589825, 2, 196609, 589826, 2, 196609, 589827, 2, 196609, 589828, 2, 196609, 589829, 2, 196609, 589830, 2, 196609, 589831, 2, 196609, 589832, 2, 196609, 589833, 2, 196609, 589834, 2, 196609, 589835, 2, 196610, 720907, 1, 196608, 720908, 1, 196609, 720909, 1, 196609, 720910, 1, 196609, 720911, 1, 196609, 720912, 1, 196609, 720913, 1, 196609, 720914, 1, 196609, 720915, 1, 196610, 851962, 1, 196608, 851963, 1, 196609, 851964, 1, 196609, 851965, 1, 196609, 851966, 1, 196609, 851967, 1, 196609, 786432, 1, 196609, 786433, 1, 196609, 786434, 1, 196609, 786435, 1, 196609, 786436, 1, 196609, 786437, 1, 196609, 786438, 1, 196609, 786439, 1, 196609, 786440, 1, 196609, 786441, 1, 196609, 786442, 1, 196610 )
-
-[editable path="Player"]

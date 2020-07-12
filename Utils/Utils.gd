@@ -16,3 +16,14 @@ func instance_scene_on_main(packed_scene, position=Vector2.ZERO):
 	instance.global_position = position
 	main.add_child(instance)
 	return instance
+
+
+func get_MainInstances():
+	"""
+	Helper method to load our MainInstances resource which
+	allows for shared access to things like the player,
+	player camera, etc...
+
+	:returns: The MainInstances resource.
+	"""
+	return ResourceLoader.load("res://MainInstances/MainInstances.tres")

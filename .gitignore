@@ -2,6 +2,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/c++,godot,python,visualstudio
 # Edit at https://www.toptal.com/developers/gitignore?templates=c++,godot,python,visualstudio
 
+### Autonomous save data ###
+autonomous_save_data.json
+
 ### C++ ###
 # Prerequisites
 *.d

@@ -2,7 +2,9 @@ extends Node
 
 const SAVE_DATA_PATH = "res://autonomous_save_data.json"
 
-var default_save_data = {}
+var default_save_data = {
+	level = "res://Levels/Level_00.tscn"
+}
 
 
 func save_data_to_file(save_data):

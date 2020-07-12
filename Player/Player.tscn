@@ -123,7 +123,7 @@ tracks/0/keys = {
 "values": [ 241, 242, 243 ]
 }
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 48, 23 )
 
 [sub_resource type="CircleShape2D" id=10]
@@ -173,7 +173,7 @@ anims/Run = SubResource( 8 )
 [node name="Collider" parent="ObjectDetectionZone" index="0"]
 modulate = Color( 1, 1, 1, 0.317647 )
 position = Vector2( 0, -18 )
-shape = SubResource( 11 )
+shape = SubResource( 9 )
 
 [node name="CollectibleDetector" parent="." instance=ExtResource( 4 )]
 
