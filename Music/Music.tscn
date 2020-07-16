@@ -8,3 +8,4 @@ pause_mode = 2
 stream = ExtResource( 2 )
 autoplay = true
 script = ExtResource( 1 )
+[connection signal="finished" from="." to="." method="_on_Music_finished"]

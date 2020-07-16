@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Levels/Level.tscn" type="PackedScene" id=1]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.17099, 5.38002 )
 
 [node name="Level_00" instance=ExtResource( 1 )]
@@ -23,6 +23,6 @@ next_level_path = "res://Levels/Level_01.tscn"
 
 [node name="Collider" parent="LevelPortal" index="0"]
 position = Vector2( 319.966, 121.269 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [editable path="LevelPortal"]

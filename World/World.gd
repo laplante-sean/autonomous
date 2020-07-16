@@ -41,14 +41,20 @@ func _ready():
 
 
 func _physics_process(delta):
-	if Input.is_action_just_pressed("create"):
-		create_coin()
 	if Input.is_action_just_released("zoom_in"):
 		zoom_in()
 	if Input.is_action_just_released("zoom_out"):
 		zoom_out()
 	if Input.is_action_just_pressed("reset_camera"):
 		reset_zoom()
+
+
+func _input(event):
+	if event is InputEventScreenTouch and event.is_pressed():
+		var transform = get_canvas_transform()
+		create_coin(transform.xform_inv(event.position))
+	elif event.is_action_pressed("create"):
+		create_coin(get_local_mouse_position())
 
 
 func spawn():
@@ -98,9 +104,15 @@ func reset_zoom():
 	camera.zoom = Vector2(1, 1)
 
 
-func create_coin():
-	Utils.instance_scene_on_main(Coin, get_local_mouse_position())
+func create_coin(loc):
+	"""
+	Create a coin at the provided location
+	
+	:param loc: The location to create the coin
+	"""
+	Utils.instance_scene_on_main(Coin, loc)
 	stats.coins_used += 1
+
 
 func reload_level(fresh_load=true):
 	"""
@@ -134,12 +146,22 @@ func reload_level(fresh_load=true):
 
 
 func display_level_welcome():
+	"""
+	Display the level welcome popup that displays
+	par for the current level.
+	"""
 	levelMenu.set_level_label(currentLevel.label)
 	levelMenu.set_par_label(currentLevel.par)
 	levelMenu.set_visible(true)
 
 
 func change_levels(scene_path):
+	"""
+	Change to the level specified at scene_path unless
+	this is the final level, then go to TheEnd scene
+	
+	:param scene_path: Path to next level
+	"""
 	if currentLevel.is_final_level():
 		update_save_data("res://Levels/Level_00.tscn", true)
 		get_tree().change_scene("res://Menus/TheEnd.tscn")
